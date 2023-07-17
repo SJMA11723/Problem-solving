@@ -39,7 +39,6 @@ long long mergeSort(int arr[], int ini, int fin){
             }
         } else if(idx1 < tam1){ /// si solo hay elementos en mitad1
             arr[i] = mitad1[idx1++];
-            //cnt += (long long)tam2;
         } else {
             arr[i] = mitad2[idx2++];
         }
