@@ -5,6 +5,8 @@
 
 #include <bits/stdc++.h>
 #define MAXN 100000
+#define BLACK 1
+#define WHITE 0
 
 using namespace std;
 
@@ -25,20 +27,13 @@ int64_t dp[MAXN][2];
 
 void dfs(int node, int p = -1){
     dp[node][color[node]] = 1;
+    dp[node][!color[node]] = 0;
 
-    int64_t w = 1;
     for(int v : tree[node]){
         if(v == p) continue;
         dfs(v, node);
 
-        /*if(color[node]){
-            if(dp[v][1]) dp[node][1] = dp[node][1] * (dp[v][0] + 1) % MOD;
-        } else {
-            if(dp[v][1]) dp[node][0] = dp[node][0] * (dp[v][0] + 1) % MOD;
-        }*/
-        if(dp[v][1]){
-            dp[node][color[node]] = dp[node][color[node]] * (dp[v][0] + 1) % MOD;
-        }
+        dp[node][color[node]] = dp[node][color[node]] * (dp[v][WHITE] + dp[v][BLACK]) % MOD;
     }
 
 
@@ -46,13 +41,10 @@ void dfs(int node, int p = -1){
         if(v == p) continue;
 
         if(!color[node]){
-            dp[node][1] += dp[v][1] * dp[node][0] % MOD * bin_exp(dp[v][0] + 1, MOD - 2) % MOD;
-            dp[node][1] %= MOD;
-            //cout << node << ": " << dp[v][1] << '\n';
+            dp[node][BLACK] += dp[v][BLACK] * dp[node][color[node]] % MOD * bin_exp(dp[v][WHITE] + dp[v][BLACK], MOD - 2) % MOD;
+            dp[node][BLACK] %= MOD;
         }
     }
-
-    cout << node << ' ' << dp[node][0] << ' ' << dp[node][1] << '\n';
 }
 
 int main(){
