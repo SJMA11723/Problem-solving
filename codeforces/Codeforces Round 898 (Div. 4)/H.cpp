@@ -75,14 +75,9 @@ int main(){
         for(int u = cycle_end; u != cycle_start; u = P[u]) in_cycle[u] = true;
         in_cycle[cycle_start] = true;
 
-        /*for(int i = 0; i < n; ++i) cout << in_cycle[i] << ' ';
-        cout << '\n';*/
-
         auto [entry_point, val_dist] = bfs(b, graph, in_cycle, n);
-        //cout << "Entry: " << entry_point + 1 << ' ' << val_dist << '\n';
 
         auto [mar_dist, foo] = bfs(a, graph, in_cycle, n, 1, entry_point);
-        //cout << "Marcel dist: " << mar_dist << '\n';
 
         cout << (val_dist < mar_dist ? "YES\n" : "NO\n");
     }
