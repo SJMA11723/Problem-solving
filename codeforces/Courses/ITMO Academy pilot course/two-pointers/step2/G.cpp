@@ -28,8 +28,6 @@ struct gcd_stack{
 struct gcd_queue{
     void push(int64_t v){p_in.push(v);}
 
-    void push_front(int64_t v){p_out.push(v);}
-
     int64_t front(){transfer(); return p_out.top();}
 
     void pop(){transfer(); p_out.pop();}
