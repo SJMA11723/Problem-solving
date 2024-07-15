@@ -7,6 +7,23 @@
 
 using namespace std;
 
+const int64_t P = 31;
+const int64_t MOD = 1e9 + 9;
+int64_t H[5001], mpow[5001];
+
+void build_hash(string &s){
+    H[0] = s[0] - 'a' + 1;
+    mpow[0] = 1;
+    for(int i = 1; i < s.size(); ++i){
+        mpow[i] = mpow[i - 1] * P % MOD;
+        H[i] = (H[i - 1] * P + s[i] - 'a' + 1) % MOD;
+    }
+}
+
+int shash(int i, int j){
+    return (H[j] - (i ? H[i - 1] * mpow[j - i + 1] % MOD : 0) + MOD) % MOD;
+}
+
 struct suff{
     int idx, ord;
     string s;
@@ -17,6 +34,16 @@ struct suff{
 
 bool comp(const suff &a, const suff &b){
     return a.idx < b.idx;
+}
+
+int lcp(int i, int j, vector<suff> &arr){
+    int l = 0, r = min(arr[i].s.size(), arr[j].s.size());
+    while(l < r){
+        int mid = l + (r - l) / 2;
+        if(shash(arr[i].idx, arr[i].idx + mid) == shash(arr[j].idx, arr[j].idx + mid)) l = mid + 1;
+        else r = mid;
+    }
+    return l;
 }
 
 int main(){
@@ -31,34 +58,28 @@ int main(){
         for(int i = 0; i < n; ++i) arr.push_back({i, 0, s.substr(i)});
         sort(arr.begin(), arr.end());
 
-        for(int i = 0; i < n; ++i){
-            arr[i].ord = i;
-        }
+        for(int i = 0; i < n; ++i) arr[i].ord = i;
 
         sort(arr.begin(), arr.end(), comp);
 
-        int dp[n] = {};
+        build_hash(s);
+
+        //cout << shash(0, n - 1) << ' ' << shash(1, n - 1) << ' ' << H[n - 1] << '\n';
+
+        int64_t dp[n] = {};
         for(int i = 0; i < n; ++i){
             dp[i] = 0;
             int idx = -1;
             //cout << i << ' ' << arr[i].s << ' ';
             for(int j = 0; j < i; ++j){
                 if(arr[j].ord > arr[i].ord) continue;
-                if(dp[i] < dp[j]){
+                if(dp[i] < dp[j] - lcp(i, j, arr)){
                     idx = j;
-                    dp[i] = dp[j];
+                    dp[i] = dp[j] - lcp(i, j, arr);
                 }
             }
-
-            //cout << idx << ' ';
-            int cnt = 0;
-            if(idx != -1){
-                for(int k = 0; k < min(arr[i].s.size(), arr[idx].s.size()); ++k)
-                    if(arr[idx].s[k] < arr[i].s[k]) break;
-                    else cnt++;
-            }
-            dp[i] += n - arr[i].idx - cnt;
-            //cout << dp[i] << '\n';
+            dp[i] += n - arr[i].idx;
+            //cout << dp[i] << ' ' << idx << ' ' << (idx != -1 ? lcp(i, idx, arr) : 0) << '\n';
         }
 
         cout << *max_element(dp, dp + n) << '\n';
