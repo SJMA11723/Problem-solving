@@ -19,18 +19,14 @@ int main(){
         int n = s.size();
         int64_t ans = 0;
         map<int, int64_t> pref;
+        pref[0] = 1;
         int sum = 0;
         for(int i = 0; i < n; ++i){
             if(s[i] == '1') sum++;
             else sum--;
 
-            if(!sum){
-                ans += n - i;
-                if(ans > MOD) ans -= MOD;
-            }
-
             ans += 1ll * (pref[sum]) * (n - i) % MOD;
-            if(ans > MOD) ans -= MOD;
+            if(ans >= MOD) ans -= MOD;
 
             pref[sum] += i + 2;
         }
