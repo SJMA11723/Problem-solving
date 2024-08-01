@@ -20,7 +20,7 @@ int main(){
 
     long long ans = 0;
     for(int i = 1; i <= k / 2; ++i){
-        if(i != k - i ) ans += min(rem[i], rem[k - i]) * 2;
+        if(i != k - i) ans += min(rem[i], rem[k - i]) * 2;
         else ans += rem[i] / 2 * 2;
     }
     ans += rem[0] / 2 * 2;
