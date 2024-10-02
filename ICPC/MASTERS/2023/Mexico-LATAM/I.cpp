@@ -1,8 +1,3 @@
-/**
-* Author: Jorge Raul Tzab Lopez
-* Github: https://github.com/SJMA11723
-*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
