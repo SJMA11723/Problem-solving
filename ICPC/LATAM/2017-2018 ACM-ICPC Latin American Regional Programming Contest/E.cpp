@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+    #include <bits/stdc++.h>
 
 using namespace std;
 
@@ -18,16 +18,26 @@ int main(){
     bool dp[n + 1][m][10];
     memset(dp, 0, sizeof(dp));
 
-    if(s[0] == '?'){
+    if(s[1] == '?'){
         for(int d = n == 1 ? 1 : 0; d < 10; ++d) dp[1][d % m][d] = true;
     } else {
-        int d = s[0] - '0';
-        dp[1][d % n][d] = true;
+        int d = s[1] - '0';
+        dp[1][d % m][d] = true;
     }
 
     for(int i = 2; i <= n; ++i){
-        for(int j = 0; j < m;  ++j){
-            for(int d = i == n ? 1 : 0; d < 10; ++d){
+        for(int j = 0; j < m; ++j){
+            if(s[i] == '?'){
+                for(int d = i == n ? 1 : 0; d < 10; ++d){
+
+                    int mod = (j - (d * pow10[i - 1] % m) + m) % m;
+
+                    for(int d2 = 0; d2 < 10; ++d2){
+                        dp[i][j][d] |= dp[i - 1][mod][d2];
+                    }
+                }
+            } else {
+                int d = s[i] - '0';
 
                 int mod = (j - (d * pow10[i - 1] % m) + m) % m;
 
@@ -39,20 +49,10 @@ int main(){
     }
 
     string ans;
-    //reverse(s.begin(), s.end());
-
-    cout << n << '\n';
     int mod = 0;
     for(int i = n; 0 < i; --i){
         if(s[i] != '?'){
             int d = s[i] - '0';
-
-            cout << i << ' ' << s[i] << ' ' << d << ' ' << to_string(d) << '\n';
-
-            if(!dp[i][mod][d]){
-                cout << i << ' ' << ans << "*\n";
-                return 0;
-            }
 
             ans += to_string(d);
             mod = (mod - (d * pow10[i - 1] % m) + m) % m;
@@ -60,10 +60,8 @@ int main(){
         }
 
         for(int d = (i == n ? 1 : 0); d < 10; ++d){
-            cout << i << ' ' << d << ' ' << dp[i][mod][d] << '\n';
             if(dp[i][mod][d]){
                 ans += to_string(d);
-                cout << i << ' ' << d << ' ' << to_string(d) << '\n';
                 mod = (mod - (d * pow10[i - 1] % m) + m) % m;
                 break;
             }
