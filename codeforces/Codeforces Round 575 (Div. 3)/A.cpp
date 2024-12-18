@@ -13,7 +13,22 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        int64_t arr[3]; cin >> arr[0] >> arr[1] >> arr[2];
-        cout << (arr[2] + arr[1] + arr[0]) / 2 << '\n';
+        int64_t a, b, c; cin >> a >> b >> c;
+        if(max({a, b, c}) == a) swap(a, c);
+        else if(max({a, b, c}) == b) swap(b, c);
+
+        if(a < b){
+            int64_t k = min(b - a, c);
+            a += k;
+            c -= k;
+        } else {
+            int64_t k = min(a - b, c);
+            b += k;
+            c -= k;
+        }
+
+        a += c / 2;
+        b += c / 2;
+        cout << min(a, b) << '\n';
     }
 }
