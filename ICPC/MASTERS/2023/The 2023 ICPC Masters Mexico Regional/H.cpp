@@ -84,7 +84,7 @@ int main(){
         if(!is_bridge[e.idx]) mset.join(e.from, e.to);
 
     for(edge &e : edges)
-        if(is_bridge[e.idx]) comp_deg[mset.root(e.from)]++, comp_deg[e.to]++;
+        if(is_bridge[e.idx]) comp_deg[mset.root(e.from)]++, comp_deg[mset.root(e.to)]++;
 
     if(mset.cnt == 1){
         cout << "0\n";
