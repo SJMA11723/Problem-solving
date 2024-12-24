@@ -14,19 +14,24 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        int P[n];
-        for(int i = 0; i < n; ++i){
-            cin >> P[i];
-            P[i]--;
+        int p[n];
+        for(int &x : p){
+            cin >> x;
+            x--;
         }
-
+        int vis[n] = {};
         int ans = 3;
         for(int i = 0; i < n; ++i){
-            if(i == P[P[i]]){
-                ans = 2;
-                break;
+            if(vis[i]) continue;
+            int cnt = 0, cur = i;
+            while(!vis[cur]){
+                cnt++;
+                vis[cur] = true;
+                cur = p[cur];
             }
+            ans = min(ans, cnt);
         }
+
         cout << ans << '\n';
     }
 }
