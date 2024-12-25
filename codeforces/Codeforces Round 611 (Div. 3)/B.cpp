@@ -13,10 +13,7 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        int hh, mm; cin >> hh >> mm;
-        int ans = 0;
-        if(mm) ans += 60 - mm, hh++;
-        ans += (24 - hh) * 60;
-        cout << ans << '\n';
+        int64_t n, k; cin >> n >> k;
+        cout << n / k * k + min(n % k, k / 2) << '\n';
     }
 }
