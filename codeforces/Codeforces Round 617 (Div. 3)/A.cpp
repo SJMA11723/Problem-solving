@@ -14,14 +14,13 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        int cnt_i = 0;
-        bool par = false;
+        int cnt_odd = 0;
         for(int i = 0; i < n; ++i){
             int x; cin >> x;
-            if(x % 2) cnt_i++;
-            else par = true;
+            if(x % 2) cnt_odd++;
         }
-        if(cnt_i % 2 || (par && cnt_i)) cout << "YES\n";
+        if(cnt_odd % 2 == 0 && cnt_odd && cnt_odd < n) cnt_odd--;
+        if(cnt_odd % 2) cout << "YES\n";
         else cout << "NO\n";
     }
 }
