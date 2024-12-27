@@ -15,8 +15,17 @@ int main(){
     while(t--){
         int a, b, c, n;
         cin >> a >> b >> c >> n;
-        int maxi = max({a, b, c});
-        if(n + a + b + c - 3 * maxi < 0 || (n + a + b + c - 3 * maxi) % 3 ) cout << "NO\n";
-        else cout << "YES\n";
+        if((a + b + c + n) % 3){
+            cout << "NO\n";
+            continue;
+        }
+
+        int target = (a + b + c + n) / 3;
+        if(target < a || target < b || target < c){
+            cout << "NO\n";
+            continue;
+        }
+
+        cout << "YES\n";
     }
 }
