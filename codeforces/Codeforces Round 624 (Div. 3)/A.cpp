@@ -14,14 +14,14 @@ int main(){
     int t; cin >> t;
     while(t--){
         int a, b; cin >> a >> b;
-        int dif = b - a;
-        if(dif == 0) cout << "0\n";
-        else if(dif < 0){
-            if(dif % 2) cout << "2\n";
-            else cout << "1\n";
-        } else {
-            if(dif % 2) cout << "1\n";
+        if(a < b){
+            int diff = b - a;
+            if(diff % 2) cout << "1\n";
             else cout << "2\n";
-        }
+        } else if(b < a){
+            int diff = a - b;
+            if(diff % 2) cout << "2\n";
+            else cout << "1\n";
+        } else cout << "0\n";
     }
 }
