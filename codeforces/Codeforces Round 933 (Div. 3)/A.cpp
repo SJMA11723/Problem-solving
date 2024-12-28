@@ -14,19 +14,16 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n, m, k; cin >> n >> m >> k;
-        int arr[n], arr2[m];
-        for(int i = 0; i < n; ++i) cin >> arr[i];
-        for(int i = 0; i < m; ++i) cin >> arr2[i];
+        int a[n], b[m];
+        for(int &x : a) cin >> x;
+        for(int &x : b) cin >> x;
 
-        sort(arr, arr + n, greater<int>());
-        sort(arr2, arr2 + m);
-
-        int idx = -1, ans = 0;
+        int ans = 0;
         for(int i = 0; i < n; ++i){
-            while(idx + 1 < m && arr2[idx + 1] + arr[i] <= k) idx++;
-            ans += idx + 1;
+            for(int j = 0; j < m; ++j){
+                if(a[i] + b[j] <= k) ans++;
+            }
         }
-
         cout << ans << '\n';
     }
 }
