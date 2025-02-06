@@ -7,33 +7,40 @@
 
 using namespace std;
 
-bool bfs(int from, string &s, const int d){
-    int n = s.size();
+bool check(string &s, int d){
+    set<int> pending;
+    for(int i = 1; i <= s.size(); ++i) pending.insert(i);
 
     queue<int> q;
-    q.push(from);
-    set<int> pending;
-    for(int i = 0; i < n; ++i) pending.insert(i);
-    pending.erase(from);
-
+    q.push(0);
     while(q.size()){
-        int cur = q.front();
+        int u = q.front();
         q.pop();
 
-        if(s[cur] == 'L'){
-            auto lo = pending.lower_bound(max(0, cur - d));
-            auto hi = pending.lower_bound(cur);
-            for(auto it = lo; it != hi; ++it) q.push(*it);
-            pending.erase(lo, hi);
-        }
-        else {
-            auto lo = pending.lower_bound(cur + 1);
-            auto hi = pending.lower_bound(min(n, cur + d + 1));
-            for(auto it = lo; it != hi; ++it) q.push(*it);
-            pending.erase(lo, hi);
+        if(u == s.size()) return true;
+
+        if(s[u] == 'R'){
+            auto it = pending.upper_bound(u);
+            while(it != pending.end() && *it <= u + d){
+                q.push(*it);
+                it = pending.erase(it);
+            }
+        } else {
+            auto it = pending.lower_bound(u);
+            while(it != pending.begin()){
+                it--;
+                if(u - d <= *it) q.push(*it);
+                else {
+                    it++;
+                    break;
+                }
+            }
+
+            while(it != pending.end() && u - d <= *it && *it <= u) it = pending.erase(it);
         }
     }
-    return !pending.count(n - 1);
+
+    return false;
 }
 
 int main(){
@@ -43,12 +50,11 @@ int main(){
     int t; cin >> t;
     while(t--){
         string s; cin >> s;
-        s = "R" + s + "L";
-
-        int l = 0, r = s.size();
+        s = "R" + s;
+        int l = 0, r = s.size() + 1;
         while(l < r){
             int mid = l + (r - l) / 2;
-            if(bfs(0, s, mid)) r = mid;
+            if(check(s, mid)) r = mid;
             else l = mid + 1;
         }
         cout << l << '\n';
