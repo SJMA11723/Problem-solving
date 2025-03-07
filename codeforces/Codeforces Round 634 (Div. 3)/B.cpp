@@ -14,7 +14,11 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n, a, b; cin >> n >> a >> b;
-        for(int i = 0; i < n; ++i) cout << char('a' + i % b);
+        string str;
+        for(int i = 0; i < b; ++i) str += char('a' + i);
+        while(str.size() < a) str += str.back();
+
+        for(int i = 0; i < n; ++i) cout << str[i % a];
         cout << '\n';
     }
 }
