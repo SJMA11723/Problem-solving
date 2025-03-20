@@ -13,10 +13,9 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        string b; cin >> b;
-        bool left = false;
-        cout << b[0];
-        for(int i = 1; i < b.size(); i += 2) cout << b[i];
+        string s; cin >> s;
+        cout << s[0];
+        for(int i = 1; i < s.size(); i += 2) cout << s[i];
         cout << '\n';
     }
 }

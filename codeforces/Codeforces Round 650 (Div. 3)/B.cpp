@@ -14,16 +14,20 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        int cnt = 0, cnt_ok = 0;
+        int even = 0, odd = 0;
         for(int i = 0; i < n; ++i){
             int x; cin >> x;
-            if(x % 2) cnt--;
-            else cnt++;
-            if(x % 2 == i % 2) cnt_ok++;
+            if(x % 2 != i % 2){
+                if(i % 2) odd++;
+                else even++;
+            }
         }
 
-        if(n - n / 2 * 2 != cnt) cout << "-1\n";
-        else cout << (n - cnt_ok) / 2 << '\n';
+        if(odd != even){
+            cout << "-1\n";
+            continue;
+        }
+
+        cout << odd << '\n';
     }
 }
-
