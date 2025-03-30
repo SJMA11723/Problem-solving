@@ -13,13 +13,16 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        int x, y, n; cin >> x >> y >> n;
-        int r = n % x;
-        int ans = n;
-        if(r < y){
-            ans -= r;
-            ans -= x - y;
-        } else ans -= r - y;
+        int n; cin >> n;
+        int cnt = 0, ans = 0;
+        for(int i = 0; i < n; ++i){
+            char c; cin >> c;
+            if(c == '(') cnt++;
+            else {
+                if(cnt <= 0) ans++;
+                else cnt--;
+            }
+        }
         cout << ans << '\n';
     }
 }
