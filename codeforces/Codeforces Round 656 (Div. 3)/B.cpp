@@ -14,15 +14,17 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        bool vis[n + 1] = {};
-        int cnt = 0;
+        int arr[2 * n], ans[n];
+        int idx1 = 0, idx2 = 0;
         for(int i = 0; i < 2 * n; ++i){
             int x; cin >> x;
-            if(!vis[x]){
-                cout << x << " \n"[cnt + 1 == n];
-                cnt++;
-                vis[x] = true;
+            if(idx1 == idx2) ans[idx1++] = x;
+            else {
+                if(ans[idx2] == x) idx2++;
+                else ans[idx1++] = x;
             }
         }
+
+        for(int i = 0; i < n; ++i) cout << ans[i] << " \n"[i + 1 == n];
     }
 }
