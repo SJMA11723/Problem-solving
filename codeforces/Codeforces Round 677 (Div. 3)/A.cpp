@@ -14,10 +14,15 @@ int main(){
     int t; cin >> t;
     while(t--){
         int x; cin >> x;
-        int ans = 10 * (x % 10 - 1), cnt = 1;
-        while(x){
-            x /= 10;
-            ans += cnt++;
+        int ans = 0;
+        for(int i = 1; i < 10; ++i){
+            int num = i, cnt = 1;
+            while(num < 10000){
+                ans += cnt++;
+                if(num == x) break;
+                num = num * 10 + i;
+            }
+            if(num == x) break;
         }
         cout << ans << '\n';
     }
