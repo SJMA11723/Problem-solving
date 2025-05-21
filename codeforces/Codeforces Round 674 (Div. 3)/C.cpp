@@ -17,11 +17,7 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        int n, x; cin >> n >> x;
-        if(n <= 2){
-            cout << "1\n";
-            continue;
-        }
-        cout << (n - 2 + x - 1) / x + 1 << '\n';
+        int n; cin >> n;
+        cout << floor(sqrt(1 + 4ll * (n - 1))) - 1 << '\n';
     }
 }
