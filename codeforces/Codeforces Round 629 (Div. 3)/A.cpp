@@ -14,6 +14,6 @@ int main(){
     int t; cin >> t;
     while(t--){
         int a, b; cin >> a >> b;
-        cout << (b - a % b) % b << '\n';
+        cout << (a + b - 1) / b * b - a << '\n';
     }
 }
