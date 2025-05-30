@@ -4,6 +4,10 @@
 */
 
 #include <bits/stdc++.h>
+#define all(x) x.begin(), x.end()
+#define pb push_back
+#define ff first
+#define ss second
 
 using namespace std;
 
@@ -14,11 +18,11 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        vector<int> arr(n);
-        for(int i = 0; i < n; ++i) cin >> arr[i];
-        sort(arr.begin(), arr.end());
-        for(int i = 0; i < arr.size(); ++i)
-            while(i + 1 < arr.size() && arr[i + 1] - arr[i] <= 1) arr.erase(arr.begin() + i);
-        cout << (arr.size() == 1 ? "YES\n" : "NO\n");
+        int arr[n];
+        for(int &x : arr) cin >> x;
+        sort(arr, arr + n);
+        bool ok = true;
+        for(int i = 1; i < n; ++i) ok &= abs(arr[i] - arr[i - 1]) <= 1;
+        cout << (ok ? "YES\n" : "NO\n");
     }
 }
