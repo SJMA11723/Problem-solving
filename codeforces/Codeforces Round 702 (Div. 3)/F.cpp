@@ -18,14 +18,20 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        int ans = 0;
-        int prv; cin >> prv;
-        for(int i = 1; i < n; ++i){
+        map<int, int> cnt;
+        while(n--){
             int x; cin >> x;
-            int mini = min(prv, x), maxi = max(prv, x);
-            while(maxi > 2 * mini) ans++, mini <<= 1;
-            prv = x;
+            cnt[x]++;
         }
+
+        vector<int> freqs;
+        for(auto &it : cnt) freqs.pb(it.se);
+
+        sort(all(freqs));
+        int ans = INT_MAX, sum = accumulate(all(freqs), 0);
+
+        n = freqs.size();
+        for(int i = 0; i < n; ++i) ans = min(ans, sum - freqs[i] * (n - i));
         cout << ans << '\n';
     }
 }

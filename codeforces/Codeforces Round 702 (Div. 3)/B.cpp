@@ -18,13 +18,21 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        int ans = 0;
-        int prv; cin >> prv;
-        for(int i = 1; i < n; ++i){
+        int cnt[3] = {};
+        int target = n / 3;
+        while(n--){
             int x; cin >> x;
-            int mini = min(prv, x), maxi = max(prv, x);
-            while(maxi > 2 * mini) ans++, mini <<= 1;
-            prv = x;
+            cnt[x % 3]++;
+        }
+
+        int ans = 0;
+        for(int i = 0; i < 6; ++i){
+            int r = i % 3;
+            if(cnt[r] > target){
+                cnt[(r + 1) % 3] += cnt[r] - target;
+                ans += cnt[r] - target;
+                cnt[r] = target;
+            }
         }
         cout << ans << '\n';
     }
