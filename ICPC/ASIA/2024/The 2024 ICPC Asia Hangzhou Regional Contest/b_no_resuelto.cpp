@@ -191,21 +191,8 @@ int main(){
             ST.update(x, 0, s, s, 1, n);
 
             for(int k = 0; k <= MAXK; ++k)
-            if(is_on(x, k)){
-                auto it = intervals[k].lower_bound({s + 1, -1});
-                if(it != intervals[k].begin()){
-                    it--;
-                    /// break interval
-                    if(it->fi <= s && s < it->se){
-                        int l, r;
-                        tie(l, r) = *it;
-                        
-                        remove_interval(intervals[k], l, r);
-                        add_interval(intervals[k], l, s);
-                        add_interval(intervals[k], s + 1, r);
-                    }
-                }
-            } else add_interval(intervals[k], s, s + 1);
+            if(is_on(x, k)) remove_interval(intervals[k], s, s + 1);
+            else add_interval(intervals[k], s, s + 1);
         } else {
             int l, r; cin >> l >> r;
             bool first = false;
