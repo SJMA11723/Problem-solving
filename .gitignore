@@ -6,3 +6,4 @@
 *.out
 *.vscode
 *template.cpp
+*.code-workspace
