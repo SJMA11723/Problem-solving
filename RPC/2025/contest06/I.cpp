@@ -1,4 +1,5 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ bool valid( string isbn ){
     int n = isbn.size();
 
     int pos = 10, cnt = 0, sum = 0, ant=false, seguido=false, numbers = 0;
+    int xcnt = 0;
     for( char c : isbn ){
         if( c == '-' ){
             cnt++;
@@ -30,12 +32,14 @@ bool valid( string isbn ){
             ant = true;
             continue;
         }
+        if( c== 'X') xcnt++;
         sum += pos*num(c);
         pos--;
         ant= false;
         numbers++;
     }
-
+    if(xcnt > 1) return false;
+    if(xcnt == 1 && isbn[n-1]!= 'X') return false;
     // si no tiene 10 digitos
     if( numbers != 10 ) return false;
 
@@ -88,10 +92,10 @@ int main(){
         if( valid( isbn10) ){
             string isbn13 = "978-" + isbn10;
             cambiar( isbn13 );
-            cout <<'\t'<< isbn13 << '\n';
+            cout << isbn13 << '\n';
 
         }else{
-            cout <<'\t' << "invalid\n";
+            cout << "invalid\n";
         }
 
     }
