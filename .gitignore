@@ -7,3 +7,4 @@
 *.vscode
 *template.cpp
 *.code-workspace
+*.gitignore
