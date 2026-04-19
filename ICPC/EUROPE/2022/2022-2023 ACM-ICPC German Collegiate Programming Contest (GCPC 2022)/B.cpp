@@ -27,7 +27,7 @@ uniform_int_distribution<ll> distr(1, LLONG_MAX);
 
 const int MOD = 1e9 + 7;
 
-const int MAXV = (1 << 15) - 1;
+const int MAXV = (1 << 10) - 1;
 
 template<class T = ll> struct dinic{
     dinic(int V){
@@ -125,36 +125,31 @@ template<class T = ll> struct dinic{
     }
 };
 
-bool es_primo(int p){
-    if(p < 2) return false;
-    bool primo = true;
-    for(int d = 2; d * d <= p; ++d){
-        if(p % d == 0) return false;
-    }
-    return true;
-}
+#define MAXN 20000000
 
 int main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
+    vector<bool> es_primo(MAXN + 1, 1);
+    for(int i = 2; i <= MAXN; ++i){
+        if(!es_primo[i]) continue;
+        for(ll j = 1ll * i * i; j <= MAXN; j += i)
+            es_primo[j] = false;
+    }
+
     int n; cin >> n;
-    int arr[n];
-    bool uno = false;
-    int cnt1 = 0;
+    vi arr(n);
+    for(int &x : arr) cin >> x;
+    sort(all(arr));
+    reverse(all(arr));
+    while(arr.back() == 1 && sz(arr) > 1 && arr[sz(arr) - 2] == 1) arr.pop_back();
+    n = sz(arr);
 
     dinic MF(n + 2);
     int s = n, t = n + 1;
     for(int i = 0; i < n; ++i){
-        cin >> arr[i];
-
-        if(arr[i] == 1){
-            cnt1++;
-            if(uno) continue;
-            uno = 1;
-        }
-
         if(arr[i] & 1){
             MF.add_edge(i, t, 1);
         } else {
@@ -168,11 +163,11 @@ int main(){
         for(int j = 0; j < n; ++j){
             if(!(arr[j] & 1)) continue;
 
-            if(es_primo(arr[i] + arr[j])){
+            if(es_primo[arr[i] + arr[j]]){
                 MF.add_edge(i, j, 1);
             }
         }
     }
 
-    cout << n - max(cnt1 - 1, 0) - MF.get_max_flow(s, t) << '\n';
+    cout << n - MF.get_max_flow(s, t) << '\n';
 }
