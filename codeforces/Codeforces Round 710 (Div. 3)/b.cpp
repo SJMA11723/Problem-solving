@@ -61,9 +61,37 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        ll n, m, x; cin >> n >> m >> x;
-        ll r = (x - 1) % n;
-        ll c = (x - 1) / n;
-        cout << m * r + c + 1 << '\n';
+        int n, k; cin >> n >> k;
+        string s; cin >> s;
+        int ans = 0;
+        for(char &c : s) if(c == '*'){
+            c = 'x';
+            ans++;
+            break;
+        }
+        for(int i = sz(s) - 1; 0 <= i; --i){
+            if(s[i] == 'x') break;
+            if(s[i] == '*'){
+                s[i] = 'x';
+                ans++;
+                break;
+            }
+        }
+
+        for(int i = 0; i < n; ++i){
+            if(s[i] != 'x') continue;
+            int last = i;
+            for(int j = i + 1; j - i <= k && j < sz(s); ++j){
+                if(s[j] == 'x'){
+                    last = j;
+                    break;
+                } else if(s[j] == '*') last = j;
+            }
+            if(s[last] != 'x'){
+                ans++;
+                s[last] = 'x';
+            }
+        }
+        cout << ans << '\n';
     }
 }

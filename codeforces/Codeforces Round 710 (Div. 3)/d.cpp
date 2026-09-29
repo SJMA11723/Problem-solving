@@ -61,9 +61,15 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        ll n, m, x; cin >> n >> m >> x;
-        ll r = (x - 1) % n;
-        ll c = (x - 1) / n;
-        cout << m * r + c + 1 << '\n';
+        int n; cin >> n;
+        map<int, int> cnt;
+        int maxi = 0;
+        for(int i = 0; i < n; ++i){
+            int ai; cin >> ai;
+            int freq = ++cnt[ai];
+            maxi = max(maxi, freq);
+        }
+        if(2 * maxi >= n) cout << 2 * maxi - n << '\n';
+        else cout << ((n & 1) ? "1\n" : "0\n");
     }
 }

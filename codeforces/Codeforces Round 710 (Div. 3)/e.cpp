@@ -61,9 +61,33 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        ll n, m, x; cin >> n >> m >> x;
-        ll r = (x - 1) % n;
-        ll c = (x - 1) / n;
-        cout << m * r + c + 1 << '\n';
+        int n; cin >> n;
+        int ans_min[n + 1] = {}, ans_max[n + 1] = {};
+        set<int> pending_min, pending_max;
+        for(int i = 1; i <= n; ++i){
+            pending_min.insert(i);
+            pending_max.insert(i);
+        }
+        int prv = 0;
+        for(int i = 0; i < n; ++i){
+            int qi; cin >> qi;
+            if(qi != prv){
+                ans_min[i] = ans_max[i] = qi;
+                pending_min.erase(qi);
+                pending_max.erase(qi);
+            } else {
+                ans_min[i] = *pending_min.begin();
+                pending_min.erase(pending_min.begin());
+                
+                auto it = pending_max.upper_bound(qi);
+                ans_max[i] = *(--it);
+                pending_max.erase(it);
+            }
+
+            prv = qi;
+        }
+
+        for(int i = 0; i < n; ++i) cout << ans_min[i] << " \n"[i + 1 == n];
+        for(int i = 0; i < n; ++i) cout << ans_max[i] << " \n"[i + 1 == n];
     }
 }

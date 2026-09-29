@@ -61,9 +61,12 @@ int main(){
     cout.tie(0);
     int t; cin >> t;
     while(t--){
-        ll n, m, x; cin >> n >> m >> x;
-        ll r = (x - 1) % n;
-        ll c = (x - 1) / n;
-        cout << m * r + c + 1 << '\n';
+        string a, b; cin >> a >> b;
+        int max_len = 0;
+        for(int l = 0; l < sz(a); ++l)
+        for(int r = l; r < sz(a); ++r)
+            if(b.find(a.substr(l, r - l + 1)) != string::npos)
+                max_len = max(max_len, r - l + 1);
+        cout << sz(a) + sz(b) - 2 * max_len << '\n';
     }
 }
