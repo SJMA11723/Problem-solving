@@ -62,13 +62,26 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        vpii arr(n);
-        for(int i = 1; i <= n; ++i){
-            int x; cin >> x;
-            arr[i - 1] = {x, i};
+        vi b(n + 2);
+        for(int &bi : b) cin >> bi;
+        ll sum = accumulate(all(b), 0ll);
+        sort(all(b));
+        if(sum - b[n] - b[n + 1] == b[n] || sum - b[n] - b[n + 1] == b[n + 1]){
+            for(int i = 0; i < n; ++i) cout << b[i] << " \n"[i + 1 == n];
+        } else {
+            sum -= b[n + 1];
+            int idx = -1;
+            for(int i = 0; i <= n; ++i){
+                if(sum - b[i] == b[n + 1]){
+                    idx = i;
+                    break;
+                }
+            }
+            if(idx == -1) cout << "-1\n";
+            else {
+                for(int i = idx ? 0 : 1; i <= n; i += (i + 1 == idx ? 2 : 1))
+                    cout << b[i] << " \n"[i + 1 >= n + (idx < n)];
+            }
         }
-        sort(all(arr));
-        if(arr[0].fi == arr[1].fi) cout << arr[n - 1].se << '\n';
-        else cout << arr[0].se << '\n';
     }
 }

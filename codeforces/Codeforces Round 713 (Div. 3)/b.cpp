@@ -62,13 +62,26 @@ int main(){
     int t; cin >> t;
     while(t--){
         int n; cin >> n;
-        vpii arr(n);
-        for(int i = 1; i <= n; ++i){
-            int x; cin >> x;
-            arr[i - 1] = {x, i};
+        char mat[n][n];
+        pii A = {-1, -1}, B;
+        for(int i = 0; i < n; ++i)
+        for(int j = 0; j < n; ++j){
+            cin >> mat[i][j];
+            if(mat[i][j] == '*'){
+                if(A.fi == -1) A = {i, j};
+                else B = {i, j};
+            }
         }
-        sort(all(arr));
-        if(arr[0].fi == arr[1].fi) cout << arr[n - 1].se << '\n';
-        else cout << arr[0].se << '\n';
+        if(A.fi == B.fi){
+            if(A.fi == n - 1) mat[0][A.se] = mat[0][B.se] = '*';
+            else mat[n - 1][A.se] = mat[n - 1][B.se] = '*';
+        } else if(A.se == B.se){
+            if(A.se > 0) mat[A.fi][0] = mat[B.fi][0] = '*';
+            else mat[A.fi][n - 1] = mat[B.fi][n - 1] = '*';
+        } else mat[min(A.fi, B.fi)][min(A.se, B.se)] = mat[max(A.fi, B.fi)][min(A.se, B.se)] =
+               mat[min(A.fi, B.fi)][max(A.se, B.se)] = mat[max(A.fi, B.fi)][max(A.se, B.se)] = '*';
+
+        for(int i = 0; i < n; ++i, cout << '\n')
+        for(int j = 0; j < n; ++j) cout << mat[i][j];
     }
 }
