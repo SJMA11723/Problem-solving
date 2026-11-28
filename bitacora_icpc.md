@@ -28,6 +28,7 @@
 | 2026-11-22 | SPOJ TEMPLEQ Temple Queues | - | Pistas | Treap con punteros a padre + lazy | Confundir arreglo externo vs treap | Treap como única fuente de verdad; padre para clave externa |
 | 2026-11-23 | SPOJ HORRIBLE | - | Pistas | Implicit treap, lazy aditivo | `sum` sin actualizar en lazy; falta `push` | Actualizar agregado al cambiar lazy; `push` hijos antes de `recalc` |
 | 2026-11-24 | CF 1021D Hitchhiking Baltic States | Div1/2 D | Pistas | LIS O(n log n) intervalos, implicit treap | Bloqueo por dep. de "punto anterior" | Conectar DP de secuencias crecientes con tails array de LIS |
+| 2026-11-27 | CF Sneetches and Speeches 3 (C) | - | Pistas | Treap implícito, lazy combinado (rev + xor + assign vía sort) | WA no determinista: (1) `cnt1` sin actualizar en `apply_lz` al aplicar `lzupt`; (2) `xor1` no se limpiaba al cascadear un `lzupt` nuevo en `push`, violando dominancia assign>xor | Dominancia entre lazies no conmutativos; orden de aplicación en `apply_lz` (assign antes que xor) y limpieza explícita del lazy relativo al propagar un assign en `push()` |
 
 ## Repertorio de técnicas
 | Técnica | Cuándo sospecharla | Problemas |
@@ -45,6 +46,7 @@
 | Sqrt decomp + lazy/pendientes | Range update/query incómodo para SegTree (cascadas entre bloques o buffer √M) | TAP 2026M; Gym 105505H |
 | Centroid decomposition | Conteo de pares de nodos en árbol con condición sobre distancia | CSES 2080, 2081 |
 | Hashing sobre vectores (subespacio) | Validar que vector de frecuencias iguala X o pertenece a subespacio (ej. vec **1**) | Gym 104736C |
+| Lazy dominante sobre lazy relativo (assign anula xor/add) | Estructura con reverse + xor/add + assign combinados; WA que depende de la forma del árbol/estructura al mezclar operaciones de distinto tipo sobre el mismo rango | CF Sneetches and Speeches 3 |
 
 ## Errores crónicos
 - **Lazy/recalc:** actualizar el campo agregado en el mismo instante que cambia `lz`, y hacer `push` a hijos antes de `recalc()` (HORRIBLE).
